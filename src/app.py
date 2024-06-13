@@ -1,8 +1,10 @@
 from kivy.app import App
-from kivy.uix.label import Label
+from kivy.uix.tabbedpanel import TabbedPanel, TabbedPanelItem
+
+from controllers.qr_generator import qr_generator_controller
 
 WINDOW_TITLE = "ToolBox"
-WINDOW_WIDTH, WINDOW_HEIGHT = (600, 800)
+WINDOW_WIDTH, WINDOW_HEIGHT = (800, 800)
 
 default_settings = (
     # (section, key-values)
@@ -25,7 +27,12 @@ class ToolBoxApp(App):
             config.setdefaults(section, key_values)
 
     def build(self):
-        return Label(text="Hello World")
+        th = TabbedPanelItem(text="QR Generator")
+        th.add_widget(qr_generator_controller.view)
+        tp = TabbedPanel()
+        tp.do_default_tab = False
+        tp.add_widget(th)
+        return tp
 
     def on_start(self):
         width = self.config.getint("window", "width")
