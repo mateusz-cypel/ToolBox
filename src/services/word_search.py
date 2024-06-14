@@ -60,23 +60,33 @@ class SJPWordSearch:
             text = tag.text.strip()
 
             if name == self.TagName.H1:
+                # only add to header tags and go for the next tag
                 header_tags.append(tag.text.strip().rstrip(" ✕"))
-            elif name == self.TagName.P:
-                if text.lower() in self.StopIterationTagText.ALL:
-                    break
+                continue
 
-                if text.lower() in [self.AvailabilityTagText.DOES_NOT_EXIST]:
-                    availability_tags.append(tag.text.strip())
-                    base_word_tags.append("-")
-                    definition_tags.append("-")
-                    break
+            if name != self.TagName.P:
+                # if its not p or h1 tag just skip it
+                continue
 
-                if text.lower() in [self.AvailabilityTagText.ACCEPTABLE, self.AvailabilityTagText.UNACCEPTABLE]:
-                    availability_tags.append(tag.text.strip())
-                elif tag.attrs['style'] == self.TagStyles.BaseWordTag:
-                    base_word_tags.append(tag.text.strip())
-                elif tag.attrs['style'] == self.TagStyles.DefinitionTag:
-                    definition_tags.append(tag.text.strip())
+            if text.lower() in self.StopIterationTagText.ALL:
+                # only tags before these stop tags are interested
+                # after reaching one of the stop tags iteration can be stopped
+                break
+
+            if text.lower() in [self.AvailabilityTagText.DOES_NOT_EXIST]:
+                # if searched word does not exist it contains only tag name and text
+                # there is no base word or definition for searched word
+                availability_tags.append(tag.text.strip())
+                base_word_tags.append("-")
+                definition_tags.append("-")
+                break
+
+            if text.lower() in [self.AvailabilityTagText.ACCEPTABLE, self.AvailabilityTagText.UNACCEPTABLE]:
+                availability_tags.append(tag.text.strip())
+            elif tag.attrs['style'] == self.TagStyles.BaseWordTag:
+                base_word_tags.append(tag.text.strip())
+            elif tag.attrs['style'] == self.TagStyles.DefinitionTag:
+                definition_tags.append(tag.text.strip())
 
         return [x for x in zip(header_tags, availability_tags, base_word_tags, definition_tags)]
 
