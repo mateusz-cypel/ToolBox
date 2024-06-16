@@ -1,6 +1,6 @@
 from kivy.app import App
 
-from views.main_panel import ToolBoxMainPanel
+from views.main_panel import tool_box_main_panel
 
 WINDOW_TITLE = "ToolBox"
 WINDOW_WIDTH, WINDOW_HEIGHT = (800, 800)
@@ -26,7 +26,7 @@ class ToolBoxApp(App):
             config.setdefaults(section, key_values)
 
     def build(self):
-        return ToolBoxMainPanel()
+        return tool_box_main_panel
 
     def on_start(self):
         width = self.config.getint("window", "width")
