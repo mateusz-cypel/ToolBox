@@ -44,10 +44,16 @@ class WordSearchResultItemCard(GridLayout):
         self.add_widget(description)
 
     class LabeledTextInput(GridLayout):
+        text_input_kwargs = {
+            "disabled": True,
+            "multiline": True,
+            "size_hint_y": None,
+        }
+
         def __init__(self, header, value, **kwargs):
             super().__init__(cols=1, **kwargs)
             self.add_widget(Label(text=header, bold=True))
-            self.add_widget(TextInput(text=value, disabled=True, multiline=True, size_hint_y=None))
+            self.add_widget(TextInput(text=value, **self.text_input_kwargs))
 
     class LabeledLabel(GridLayout):
         def __init__(self, header, value, **kwargs):

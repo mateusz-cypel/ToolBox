@@ -4,7 +4,8 @@ from models.time import DateTime
 
 
 class TimeService:
-    def now(self) -> DateTime:
+    @classmethod
+    def now(cls) -> DateTime:
         dt = datetime.utcnow()
         return DateTime(
             datetime=dt,

@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 from models.word_search import WordSearchDetails, WordDetails
 from services.word_search.base import WordSearchService
-from services.word_search.exceptions import (
+from exceptions.word_search import (
     WordSearchWordNotFoundError,
     WordSearchUnknownError,
     WordSearchPageNotFoundError,
@@ -98,7 +98,7 @@ class SJPWordSearchService(WordSearchService):
             ]
         )
 
-    def _get_word_url(self, word) -> str:
+    def _get_word_url(self, word: str) -> str:
         word = quote(word)
         return urljoin(self._base_url, word)
 

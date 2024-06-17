@@ -19,7 +19,7 @@ class WordSearchResultsLayout(ScrollView):
         self._layout.bind(minimum_height=self._layout.setter('height'))
         self.add_widget(self._layout)
 
-    def update_results(self, search_details: WordSearchDetails):
+    def update_results(self, search_details: WordSearchDetails) -> None:
         self._layout.clear_widgets()
         for details in search_details.word_details:
             layout = WordSearchResultItemCard(details=details, size_hint=(1, None))

@@ -4,8 +4,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 
-from services.word_search.exceptions import WordSearchEmptyWordError
-from validators.word_search import EmptyWordValidator
+from exceptions.word_search import WordSearchEmptyWordError
+from validators import EmptyWordValidator
 
 SEARCH_WORD_BUTTON_TEXT = "Search"
 WORD_TEXT_INPUT_HINT = "Type your word..."
@@ -31,17 +31,21 @@ class WordSearchBarLayout(BoxLayout):
         self.add_widget(self._word_text_input)
         self.add_widget(self._search_word_button)
 
-        self.bind_on_text_input(callbacks=[EmptyWordValidator()])
+        self.bind_on_text_input(
+            callbacks=[
+                EmptyWordValidator()
+            ]
+        )
 
     @property
-    def word(self):
-        return self._word_text_input.text
+    def word(self) -> str:
+        return str(self._word_text_input.text)
 
-    def bind_on_search_word_button_press(self, callback: Callable):
+    def bind_on_search_word_button_press(self, callback: Callable) -> None:
         self._search_word_button.bind(on_press=callback)
 
-    def bind_on_text_input(self, callbacks: Iterable[Callable]):
-        def run_callbacks(instance: TextInput, text: str):
+    def bind_on_text_input(self, callbacks: Iterable[Callable]) -> None:
+        def run_callbacks(instance: TextInput, text: str) -> None:
             self._search_word_button.set_disabled(False)
             try:
                 for callback in callbacks:
