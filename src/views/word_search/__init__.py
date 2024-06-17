@@ -17,13 +17,13 @@ class WordSearchView(BoxLayout):
         self.add_widget(self._search_layout)
 
     @property
-    def word(self):
+    def word(self) -> str:
         return self._search_layout.word
 
-    def update_view(self, search_details: WordSearchDetails):
+    def update_view(self, search_details: WordSearchDetails) -> None:
         self._results_layout.update_results(search_details)
 
-    def bind_on_search_word_button_press(self, callback: Callable):
+    def bind_on_search_word_button_press(self, callback: Callable) -> None:
         self._search_layout.bind_on_search_word_button_press(callback)
 
 

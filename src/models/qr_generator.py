@@ -2,19 +2,17 @@ from dataclasses import dataclass
 from datetime import datetime
 
 
+QR_IMAGE_DATETIME_STR_FORMAT = "%d/%m/%Y %H:%M"
+
+
 @dataclass(frozen=True)
 class QRImageDateTime:
     datetime: datetime
     offset: int
 
     def __str__(self) -> str:
-        sign = "-" if self.offset < 0 else "+"
-        value = f"{'0' if self.offset < 10 else ''}{self.offset}"
-        offset = f"(UTC{sign}{value}:00)"
-
-        fmt = "%d/%m/%Y %H:%M"
-        dt = self.datetime.strftime(fmt)
-
+        offset = f"(UTC{self.offset:+03d}:00)"
+        dt = self.datetime.strftime(QR_IMAGE_DATETIME_STR_FORMAT)
         return f"{dt} {offset}"
 
 

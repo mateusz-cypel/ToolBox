@@ -8,9 +8,9 @@ QR_IMAGE_OUTPUT_FILEPATH = "QR_OUTPUT.png"
 
 
 class QRGeneratorService:
-    def __init__(self, time_service: TimeService, default_file_path: str = QR_IMAGE_OUTPUT_FILEPATH):
+    def __init__(self, time: TimeService, default_file_path: str = QR_IMAGE_OUTPUT_FILEPATH):
         self._default_file_path = default_file_path
-        self._time_service = time_service
+        self._time = time
 
     def generate(self, text: str, path: str | None = None) -> QRImageDetails:
         if path is None:
@@ -19,7 +19,7 @@ class QRGeneratorService:
         image = qrcode.make(text)
         image.save(path)
 
-        dt = self._time_service.now()
+        dt = self._time.now()
         return QRImageDetails(
             created_at=QRImageDateTime(
                 datetime=dt.datetime,
@@ -31,5 +31,5 @@ class QRGeneratorService:
 
 
 qr_generator_service = QRGeneratorService(
-    time_service=time_service
+    time=time_service,
 )

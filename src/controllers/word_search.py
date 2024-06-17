@@ -12,7 +12,7 @@ class WordSearchController:
         self._word_search = word_search
 
     @property
-    def view(self):
+    def view(self) -> WordSearchView:
         return self._view
 
     @property

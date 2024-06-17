@@ -1,4 +1,4 @@
-from services.word_search.exceptions import WordSearchEmptyWordError
+from exceptions.word_search import WordSearchEmptyWordError
 
 
 class EmptyWordValidator:
